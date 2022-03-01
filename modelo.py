@@ -19,11 +19,7 @@ class Abmc:
     def __init__(
         self,
     ):
-        pass
-    
-
-
-        
+        pass       
 
     def actualizar_treeview(self, mitreeview):
         # limpieza de tabla
@@ -47,34 +43,39 @@ class Abmc:
         noticia = Noticia()
         noticia.titulo = titulo.get()
         noticia.descripcion = descripcion.get()
-        noticia.save()
+        noticia.save()        
+        self.actualizar_treeview(mitreeview)
         
-        self.actualizar_treeview(mitreeview)
-"""
-    def baja(self, mitreeview):
-        item_seleccionado=mitreeview.focus()
-        valor_id=mitreeview.item(item_seleccionado)
-        con=self.conexion()
-        cursor=con.cursor()
-        sql="DELETE FROM noticias WHERE id=?"
-        datos=(valor_id["text"],)
-        print(datos, sql)
-        cursor.execute(sql, datos)
-        con.commit()
-        self.actualizar_treeview(mitreeview)
+    def guarda(variables, popupGuardar, elobjeto):   
+        popupGuardar.destroy()
+        lista = []
+        for variable in variables:
+            lista.append(variable.get())
+        noticia = Noticia()
+        noticia.titulo = lista[0]
+        noticia.descripcion = lista[1]
+        noticia.save()
+        elobjeto.mostrar()
+        
+    def borrar(variables, popupEliminar, elobjeto):
+        popupEliminar.destroy()
+        lista = []
+        for variable in variables:
+            lista.append(variable.get())
 
-    def modificar(self, titulo, descripcion, mitreeview):
-        item_seleccionado=mitreeview.focus()
-        valor_id=mitreeview.item(item_seleccionado)
-        con=self.conexion()
+        borrar = Noticia.get(Noticia.id == lista[0])
+        borrar.delete_instance()
 
-        cursor=con.cursor()
-        sql="UPDATE noticias SET (titulo, descripcion)=(?,?) WHERE id=?"
-        datos=(titulo.get(), descripcion.get(), valor_id["text"])
-        cursor.execute(sql, datos)
-        con.commit()
-        print(sql, datos)
+        elobjeto.mostrar()
+        
+    def modificar(variables, popupModificar, elobjeto):
+        popupModificar.destroy()
+        lista = []
+        for variable in variables:
+            lista.append(variable.get())
 
-        self.actualizar_treeview(mitreeview)
+        actualizar = Noticia.update(titulo = lista[1], descripcion =
+        lista[2]).where(Noticia.id == lista[0])
+        actualizar.execute()
 
-"""
+        elobjeto.mostrar()

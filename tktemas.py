@@ -10,7 +10,7 @@ class temas:
 
     def tema2(self, root):
         self.root = root
-        self.tema_2 = "white"
+        self.tema_2 = "blue"
         self.root.configure(background=self.tema_2)
         return self.root
 

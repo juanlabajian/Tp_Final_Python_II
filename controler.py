@@ -1,7 +1,7 @@
 from tkinter import Tk
 import vista
 
-# from modelo import *
+from modelo import *
 
 
 class Controller:

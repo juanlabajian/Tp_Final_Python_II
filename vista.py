@@ -1,13 +1,9 @@
-from tkinter import StringVar
-from tkinter import IntVar
-from tkinter import Frame
-from tkinter import Entry
-from tkinter import Label
-from tkinter import Button
-from tkinter import Radiobutton
-from modelo import Abmc
+from tkinter import *
 from tkinter import ttk
+
+from modelo import *
 from tktemas import temas
+
 
 
 class Ventanita:
@@ -135,7 +131,7 @@ class Ventanita:
     def borrar(
         self,
     ):
-        self.objeto_base.baja(self.tree)
+        self.objeto_base.borrar(self.tree)
 
     def modificar(
         self,
