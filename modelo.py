@@ -17,7 +17,8 @@ class BaseModel(Model):
 
 class Noticia(BaseModel):
     """Clase que genera la tabla Noticias."""
-
+    
+    # id = IntegerField(unique=True)
     titulo = CharField(unique=True)
     descripcion = TextField()
 
@@ -73,47 +74,35 @@ class Abmc:
         noticia.save()
         elobjeto.mostrar()
 
-    def borrar(variables, popupEliminar, elobjeto):
+    def borrar(self, titulo, descripcion, mitreeview):
         """Metodo para eliminar."""
 
-        popupEliminar.destroy()
-        lista = []
-        for variable in variables:
-            lista.append(variable.get())
-
-        borrar = Noticia.get(Noticia.id == lista[0])
+        item_seleccionado = mitreeview.focus()
+        valor_id = mitreeview.item(item_seleccionado)
+        
+        borrar = Noticia.get(Noticia.titulo == titulo.get())
         borrar.delete_instance()
-
-        elobjeto.mostrar()
+        
+        self.actualizar_treeview(mitreeview)       
 
     def modificar(self, titulo, descripcion, mitreeview):
         """Metodo para modificar."""
 
         item_seleccionado = mitreeview.focus()
         valor_id = mitreeview.item(item_seleccionado)
-        con = self.conexion()
-
-        cursor = con.cursor()
-        sql = "UPDATE noticias SET (titulo, descripcion)=(?,?) WHERE id=?"
-        datos = (titulo.get(), descripcion.get(), valor_id["text"])
-        cursor.execute(sql, datos)
-        con.commit()
-        print(sql, datos)
-
-        self.actualizar_treeview(mitreeview)
-        ###
-
-        popupModificar.destroy()
-        lista = []
-        for variable in variables:
-            lista.append(variable.get())
-
-        actualizar = Noticia.update(titulo=lista[1], descripcion=lista[2]).where(
-            Noticia.id == lista[0]
-        )
+        
+        for selec in mitreeview.selection():
+            item = mitreeview.item(selec)
+            record = item["values"]
+            titulo.set(record[0])
+            descripcion.set(record[1])
+        
+        actualizar = Noticia.update(descripcion = descripcion.get()).where(
+            Noticia.titulo == titulo.get())
+        
         actualizar.execute()
 
-        elobjeto.mostrar()
+        self.actualizar_treeview(mitreeview)
 
 
 """

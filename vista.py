@@ -137,7 +137,7 @@ class Ventanita:
     ):
         """Metodo que define el borrar."""
 
-        self.objeto_base.borrar(self.tree)
+        self.objeto_base.borrar(self.tit, self.des, self.tree)
 
     def modificar(
         self,
