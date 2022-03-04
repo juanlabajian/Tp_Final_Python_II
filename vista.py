@@ -126,6 +126,12 @@ class Ventanita:
         self.tree.heading("col1", text="Título")
         self.tree.heading("col2", text="Descripción")
         self.tree.grid(row=0, column=0, columnspan=4)
+        self.tree.bind(
+            "<<TreeviewSelect>>",
+            lambda event, a=self.tree, b=self.titulo, c=self.descripcion: self.objeto_base.item_elegido(
+                a, b, c
+            ),
+        )
 
     def alta(self):
         """Metodo que define el alta"""
